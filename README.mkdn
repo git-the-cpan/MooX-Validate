@@ -1,0 +1,62 @@
+# NAME
+
+MooX::Validate - Minimalist Data Validation for Moo
+
+# VERSION
+
+version 0.000001
+
+# SYNOPSIS
+
+    package Cat::Food;
+
+    use Moo;
+    use MooX::Validate;
+
+    has brand => (
+        is  => 'ro',
+        validate => {
+            options => ['SWEET-TREATZ', 'TREATZ-THATR-SWEET', 'NOM-NOMS'],
+            filters => ['trim', 'strip'],
+        }
+    );
+
+    has pounds => (
+        is  => 'rw',
+        validate => {
+            error     => "less than 15 pounds, are you nuts?",
+            filters   => ['trim','strip', 'numeric'],
+            min_sum   => 15,
+        }
+    );
+
+    package main;
+
+    my  $food = Cat::Food->new(brand => 'NOM-NOMS', pounds => 20);
+
+        $food->pounds('  p1oy5 '); # YIPPEE
+        $food->pounds(10);         # KABOOM
+
+    1;
+
+# DESCRIPTION
+
+MooX::Validate is mashup between [Validate::Class::Simple](http://search.cpan.org/perldoc?Validate::Class::Simple) and [Moo](http://search.cpan.org/perldoc?Moo) which
+provides minimalist validation and filtering automation. Validate::Class ships
+with a complete set of pre-defined validations and filters referred to as
+["directives"](http://search.cpan.org/perldoc?MooX::Validate::Directives#DIRECTIVES). Moo is an extremely
+light-weight subset of [Moose](http://search.cpan.org/perldoc?Moose) optimised for rapid startup and "pay only for
+what you use". It also avoids depending on any XS modules to allow simple
+deployments.  The name `Moo` is based on the idea that it provides almost but
+not quite two thirds of [Moose](http://search.cpan.org/perldoc?Moose).
+
+# AUTHOR
+
+Al Newkirk <anewkirk@ana.io>
+
+# COPYRIGHT AND LICENSE
+
+This software is copyright (c) 2013 by Al Newkirk.
+
+This is free software; you can redistribute it and/or modify it under
+the same terms as the Perl 5 programming language system itself.
