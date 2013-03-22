@@ -2,7 +2,7 @@ NAME
     MooX::Validate - Minimalist Data Validation for Moo
 
 VERSION
-    version 0.000001
+    version 0.000002
 
 SYNOPSIS
         package Cat::Food;
@@ -37,14 +37,15 @@ SYNOPSIS
         1;
 
 DESCRIPTION
-    MooX::Validate is mashup between Validate::Class::Simple and Moo which
-    provides minimalist validation and filtering automation. Validate::Class
-    ships with a complete set of pre-defined validations and filters
-    referred to as "directives". Moo is an extremely light-weight subset of
-    Moose optimised for rapid startup and "pay only for what you use". It
-    also avoids depending on any XS modules to allow simple deployments. The
-    name "Moo" is based on the idea that it provides almost but not quite
-    two thirds of Moose.
+    MooX::Validate is mashup between Validation::Class::Simple and Moo which
+    provides minimalist validation and filtering automation.
+    Validation::Class ships with a complete set of pre-defined validations
+    and filters referred to as directives. Moo is an extremely light-weight
+    subset of Moose optimised for rapid startup and "pay only for what you
+    use". It also avoids depending on any XS modules to allow simple
+    deployments. The name "Moo" is based on the idea that it provides almost
+    but not quite two thirds of Moose. This is marked as experimental due to
+    the lack of unit/use-case tests.
 
 AUTHOR
     Al Newkirk <anewkirk@ana.io>

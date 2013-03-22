@@ -4,7 +4,7 @@ MooX::Validate - Minimalist Data Validation for Moo
 
 # VERSION
 
-version 0.000001
+version 0.000002
 
 # SYNOPSIS
 
@@ -41,14 +41,15 @@ version 0.000001
 
 # DESCRIPTION
 
-MooX::Validate is mashup between [Validate::Class::Simple](http://search.cpan.org/perldoc?Validate::Class::Simple) and [Moo](http://search.cpan.org/perldoc?Moo) which
-provides minimalist validation and filtering automation. Validate::Class ships
+MooX::Validate is mashup between [Validation::Class::Simple](http://search.cpan.org/perldoc?Validation::Class::Simple) and [Moo](http://search.cpan.org/perldoc?Moo) which
+provides minimalist validation and filtering automation. Validation::Class ships
 with a complete set of pre-defined validations and filters referred to as
-["directives"](http://search.cpan.org/perldoc?MooX::Validate::Directives#DIRECTIVES). Moo is an extremely
+[directives](http://search.cpan.org/perldoc?Validation::Class::Directives#DIRECTIVES). Moo is an extremely
 light-weight subset of [Moose](http://search.cpan.org/perldoc?Moose) optimised for rapid startup and "pay only for
 what you use". It also avoids depending on any XS modules to allow simple
-deployments.  The name `Moo` is based on the idea that it provides almost but
-not quite two thirds of [Moose](http://search.cpan.org/perldoc?Moose).
+deployments. The name `Moo` is based on the idea that it provides almost but
+not quite two thirds of [Moose](http://search.cpan.org/perldoc?Moose). This is marked as experimental due to the
+lack of unit/use-case tests.
 
 # AUTHOR
 

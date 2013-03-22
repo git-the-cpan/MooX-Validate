@@ -19,4 +19,4 @@ resources:
   bugtracker: https://github.com/alnewkirk/MooX-Validate/issues
   homepage: https://github.com/alnewkirk/MooX-Validate
   repository: git://github.com/alnewkirk/MooX-Validate.git
-version: 0.000001
+version: 0.000002
