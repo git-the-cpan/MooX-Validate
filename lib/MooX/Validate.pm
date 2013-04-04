@@ -8,8 +8,9 @@ use warnings;
 
 use Validation::Class::Simple;
 
-our $VERSION = '0.000002'; # VERSION
+our $VERSION = '0.000003'; # VERSION
 
+our %MAKERS = (); # this is meant to be pithy, mst--
 our @ISA    = qw(Exporter);
 our @EXPORT = qw(has);
 
@@ -17,6 +18,7 @@ sub import {
 
     my $class  = shift;
     my $target = caller;
+    my $maker  = $MAKERS{$target} = {};
 
     if (my $has = $target->can('has')) {
 
@@ -79,6 +81,11 @@ sub import {
                     die $validator->errors_to_string
                         unless $validator->validate($name);
 
+                    # defer
+                    $maker->{$name} =
+                        {rules => $validation, params => $parameter}
+                    ;
+
                 };
 
             }
@@ -89,9 +96,44 @@ sub import {
 
     }
 
+    unless ($target->can('validator')) {
+
+        no strict   'refs';
+        no warnings 'redefine';
+
+        *{"$target\::validator"} = sub {
+
+            my $self = shift;
+
+            my $class = ref $self;
+
+            my $validator = Validation::Class::Simple->new(
+                    report_failure => 1,
+                    report_unknown => 1,
+                    ignore_failure => 0,
+                    ignore_unknown => 0,
+                );
+
+            while (my($name, $config) = each(%{$maker})) {
+
+                my $validation = $config->{rules};
+                my $parameter  = $config->{params};
+
+                $validator->fields->add($name, $validation);
+                $validator->params->add($name, $parameter);
+
+            }
+
+            return $validator;
+
+        };
+
+    }
+
     return;
 
 }
+
 
 
 1;
@@ -106,7 +148,7 @@ MooX::Validate - Minimalist Data Validation for Moo
 
 =head1 VERSION
 
-version 0.000002
+version 0.000003
 
 =head1 SYNOPSIS
 
@@ -143,15 +185,27 @@ version 0.000002
 
 =head1 DESCRIPTION
 
-MooX::Validate is mashup between L<Validation::Class::Simple> and L<Moo> which
-provides minimalist validation and filtering automation. Validation::Class ships
-with a complete set of pre-defined validations and filters referred to as
-L<directives|Validation::Class::Directives/DIRECTIVES>. Moo is an extremely
-light-weight subset of L<Moose> optimised for rapid startup and "pay only for
-what you use". It also avoids depending on any XS modules to allow simple
-deployments. The name C<Moo> is based on the idea that it provides almost but
-not quite two thirds of L<Moose>. This is marked as experimental due to the
-lack of unit/use-case tests.
+MooX::Validate is mashup between L<Validation::Class::Simple>, a wrapper around
+the L<Validation::Class> library, which provides minimalist validation and
+filtering automation, and L<Moo>. Validation::Class is a robust data validation
+library that ships with a complete set of pre-defined validations and filters
+referred to as L<directives|Validation::Class::Directives/DIRECTIVES>. Moo is an
+extremely light-weight subset of L<Moose> optimised for rapid startup and
+"pay only for what you use". It also avoids depending on any XS modules to allow
+simple deployments. The name C<Moo> is based on the idea that it provides almost
+but not quite two thirds of L<Moose>.
+
+=head1 METHODS
+
+=head2 validator
+
+The validator method gives you access to a Validation::Class::Simple object
+using the pre-declared validation rules defined in the attribute declarations.
+See L<Validation::Class::Simple> for more information on utilizing this object.
+
+    my  $validator = $self->validator;
+
+        $validator->validate(@specifically);
 
 =head1 AUTHOR
 

@@ -1,5 +1,9 @@
 Revision history for the Perl library MooX::Validate
 
+0.000003  2013-04-03
+
+  - Adding access to the underlying V::C::Simple object
+
 0.000001  2013-03-21
 
   - Proof-of-Concept Release

@@ -37,6 +37,9 @@ use Test::More;
     eval { $class->today(12345) };
     ok $@ =~ /valid date/, "failed to set date to 12345: isa check failed";
 
+    can_ok $class, 'validator';
+    isa_ok $class->validator, "Validation::Class::Simple";
+
 }
 
 done_testing;
